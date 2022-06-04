@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class InsertApp {
     private Connection connect() {
-        String url = "jdbc:sqlite:identifier.sqlite";
+        String url = "jdbc:sqlite:hotel.sqlite";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);

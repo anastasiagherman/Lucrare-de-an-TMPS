@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class DatabaseConnection {
 
     public static Connection connect(){
-        String url = "jdbc:sqlite:identifier.sqlite";
+        String url = "jdbc:sqlite:hotel.sqlite";
         try(Connection conn = DriverManager.getConnection(url)){
             if(conn != null){
                 DatabaseMetaData meta = conn.getMetaData();

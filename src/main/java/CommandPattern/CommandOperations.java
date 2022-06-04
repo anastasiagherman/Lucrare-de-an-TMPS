@@ -11,12 +11,14 @@ public class CommandOperations {
         Scanner input = new Scanner(System.in);
         GuestInfo guest = new GuestInfo();
         guest.setGuest_id(input.nextInt());
+
         guest.setName(input.nextLine());
         guest.setPhone_nr(input.nextLine());
         guest.setCheckinDate(input.nextLine());
-        guest.setNrDays(input.nextInt());
+        guest.setNrDays(Integer.parseInt(input.nextLine()));
+        input.nextLine();
         guest.setCheckoutDate(input.nextLine());
-        guest.setRoomNr(input.nextInt());
+        guest.setRoomNr(Integer.parseInt(input.nextLine()));
         InsertApp insertGuest = new InsertApp();
         insertGuest.insert(guest.getGuest_id(),guest.getName(), guest.getPhone_nr(), guest.getCheckinDate(), guest.getNrDays(), guest.getCheckoutDate(), guest.getRoomNr());
         System.out.println("Mr./Mm " + guest.getName() + "is staying in room " + guest.getRoomNr() + "for" + guest.getNrDays());

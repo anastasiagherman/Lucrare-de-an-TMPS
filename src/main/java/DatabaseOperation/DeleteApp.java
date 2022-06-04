@@ -13,7 +13,7 @@ public class DeleteApp {
      */
     private Connection connect() {
         // SQLite connection string
-        String url = "jdbc:sqlite:C://sqlite/db/test.db";
+        String url = "jdbc:sqlite:hotel.sqlite";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);

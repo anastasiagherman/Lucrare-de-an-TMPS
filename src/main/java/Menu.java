@@ -1,6 +1,8 @@
 import CommandPattern.CommandManager;
 import CommandPattern.CommandOperations;
 import CommandPattern.InformationModifier;
+import DatabaseOperation.SelectInfo;
+import DecoratorPattern.PersonalisedRoomFactory;
 
 import java.util.Scanner;
 
@@ -25,14 +27,13 @@ public class Menu {
         System.out.println("*            Hotel Management System                 *");
         System.out.println("======================================================");
         System.out.println("* 1. View all rooms                                  *");
-        System.out.println("* 3. Display Empty rooms                             *");
-        System.out.println("* 2. Guest management                                *");
-        System.out.println("* 3. Display Empty rooms                             *");
+        System.out.println("* 2. Display Empty rooms                             *");
+        System.out.println("* 3. Guest management                                *");
         System.out.println("* 4. Display Room information                        *");
-        System.out.println("* 5. Find room from customer name                    *");
+        System.out.println("* 5. Personalise a Room                              *");
+        System.out.println("* 6. Find room from customer name                    *");
         System.out.println("* 7. Get guest note                                  *");
-        System.out.println("* 6. Display costumer information                    *");
-        System.out.println("* 8. Display the names of the first 3 customers      *");
+        System.out.println("* 8. Display costumer information                    *");
         System.out.println("* 9. Quit Program                                    *");
         System.out.println("======================================================");
         System.out.println("");
@@ -43,12 +44,19 @@ public class Menu {
             System.out.println();
             System.out.print("Choice : ");
             choice = input.nextInt();
+            input.nextLine();
 
             switch (choice) {
 
                 case 1:
+                    System.out.println("Hotel Rooms info: ");
+                    SelectInfo roomsInfo= new SelectInfo();
                     break;
                 case 2:
+
+                    break;
+
+                case 3:
                     System.out.print("Enter the information you want to modify (eg. checkin/checkout)");
                     String command = input.nextLine();
                     InformationModifier info = new InformationModifier(new CommandManager(new CommandOperations(),command));
@@ -56,13 +64,18 @@ public class Menu {
                     info.execute();
                     break;
 
-                case 3:
-                    break;
-
                 case 4:
                     break;
 
                 case 5:
+                    PersonalisedRoomFactory factory = new PersonalisedRoomFactory();
+                    System.out.println("Enter the room number:");
+                    int roomNr = input.nextInt();
+                    input.nextLine();
+                    System.out.println("Choose the features you want to add to the room");
+                    System.out.println("MiniBar, Room Service, MiniBar and Room Service");
+                    String roomFeatures = input.nextLine();
+                    factory.createRoom(roomFeatures, roomNr);
                     break;
 
                 case 6:
