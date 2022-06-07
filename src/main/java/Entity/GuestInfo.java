@@ -2,7 +2,7 @@ package Entity;
 
 
 public class GuestInfo {
-    private int guest_id;
+    private String guestId;
     private String guest_name;
     private String phone_nr;
     private String checkinDate;
@@ -13,8 +13,8 @@ public class GuestInfo {
     public GuestInfo(){}
 
 
-    public GuestInfo(int guest_id,String name, String phone_nr, String checkinDate, int nrDays, String checkoutDate){
-        this.guest_id = guest_id;
+    public GuestInfo(String guestId,String name, String phone_nr, String checkinDate, int nrDays, String checkoutDate){
+        this.guestId = guestId;
         this.guest_name = name;
         this.phone_nr = phone_nr;
         this.checkinDate = checkinDate;
@@ -40,12 +40,12 @@ public class GuestInfo {
         return guest_name;
     }
 
-    public void setGuest_id(int guest_id) {
-        this.guest_id = guest_id;
+    public void setGuestId(String guestId) {
+        this.guestId = guestId;
     }
 
-    public int getGuest_id() {
-        return guest_id;
+    public String getGuestId() {
+        return guestId;
     }
 
     public String getPhone_nr() {

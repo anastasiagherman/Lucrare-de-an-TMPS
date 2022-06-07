@@ -4,34 +4,19 @@ import java.sql.*;
 
 public class SelectInfo {
 
-    /**
-     * Connect to the test.db database
-     * @return the Connection object
-     */
-    private Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:hotel.sqlite";
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
 
-
-    /**
-     * select all rows in the warehouses table
-     */
     public void selectRooms(){
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
         String sql = "SELECT * FROM rooms";
 
-        try (Connection conn = this.connect();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
+        try {
+             conn = DatabaseConnection.connect();
+             stmt = conn.createStatement();
+             rs = stmt.executeQuery(sql);
 
-            // loop through the result set
+
             while (rs.next()) {
                 System.out.println(rs.getInt("room_id") +  "\t" +
                         rs.getString("room_type") + "\t" +
@@ -43,15 +28,21 @@ public class SelectInfo {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally{
+            finallyIf(conn,stmt,rs);
         }
     }
 
     public void selectSpecificRoom(int roomNr){
+        Connection conn = null;
+        Statement stmt = null;
+        ResultSet rs = null;
         String sql = "SELECT * FROM rooms WHERE room_id = roomNr";
 
-        try (Connection conn = this.connect();
-             Statement stmt  = conn.createStatement();
-             ResultSet rs    = stmt.executeQuery(sql)){
+        try {
+            conn = DatabaseConnection.connect();
+            stmt  = conn.createStatement();
+            rs    = stmt.executeQuery(sql);
 
             // loop through the result set
             while (rs.next()) {
@@ -65,12 +56,34 @@ public class SelectInfo {
             }
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            finallyIf(conn, stmt, rs);
+        }
+    }
+
+    private void finallyIf(Connection conn, Statement stmt, ResultSet rs) {
+        if (conn != null){
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (stmt != null){
+            try {
+                stmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if( rs != null){
+            try {
+                rs.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
     }
 
 
-
-    /**
-     * @param args the command line arguments
-     */
 }

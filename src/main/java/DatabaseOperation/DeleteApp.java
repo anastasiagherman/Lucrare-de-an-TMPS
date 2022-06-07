@@ -6,41 +6,38 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class DeleteApp {
-    /**
-     * Connect to the test.db database
-     *
-     * @return the Connection object
-     */
-    private Connection connect() {
-        // SQLite connection string
-        String url = "jdbc:sqlite:hotel.sqlite";
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
+
+    private void finallyIf(Connection conn, PreparedStatement pstmt) {
+        if (conn != null){
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
-        return conn;
+        if (pstmt != null){
+            try {
+                pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-    /**
-     * Delete a warehouse specified by the id
-     *
-     * @param guest_name
-     */
     public void delete(String guest_name) {
         String sql = "DELETE FROM guests WHERE guest_name = ?";
-
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            // set the corresponding param
-            pstmt.setString(2, guest_name);
-            // execute the delete statement
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try  {
+            conn = DatabaseConnection.connect();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, guest_name);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally{
+            finallyIf(conn, pstmt);
         }
     }
 }

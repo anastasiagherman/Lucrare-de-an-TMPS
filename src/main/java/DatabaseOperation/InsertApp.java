@@ -1,86 +1,78 @@
 package DatabaseOperation;
 
+import Entity.GuestInfo;
+import Entity.Room;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class InsertApp {
-    private Connection connect() {
-        String url = "jdbc:sqlite:hotel.sqlite";
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(url);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return conn;
-    }
 
-    /**
-     * Insert a new row into the guests table
-     *
-     * @param guest_id
-     * @param guest_name
-     * @param phone_nr
-     * @param checkin_date
-     * @param nr_days
-     * @param checkout_date
-     * @param room_nr
-     */
-    public void insert(int guest_id,String guest_name, String phone_nr, String checkin_date, int nr_days, String checkout_date, int room_nr) {
+
+    public void insert(GuestInfo guest) {
         String sql = "INSERT INTO guests(guest_id, guest_name, phone_nr, checkin_date, nr_days, checkout_date, room_nr) VALUES(?,?,?,?,?,?,?)";
 
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1,guest_id);
-            pstmt.setString(2, guest_name);
-            pstmt.setString(3, phone_nr);
-            pstmt.setString(4, checkin_date);
-            pstmt.setInt(5, nr_days);
-            pstmt.setString(6, checkout_date);
-            pstmt.setInt(7, room_nr);
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = DatabaseConnection.connect();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, guest.getGuestId());
+            pstmt.setString(2, guest.getName());
+            pstmt.setString(3, guest.getPhone_nr());
+            pstmt.setString(4, guest.getCheckinDate());
+            pstmt.setInt(5, guest.getNrDays());
+            pstmt.setString(6, guest.getCheckoutDate());
+            pstmt.setInt(7, guest.getRoomNr());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            finallyIf(conn, pstmt);
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
+    private void finallyIf(Connection conn, PreparedStatement pstmt) {
+        if (conn != null){
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        if (pstmt != null){
+            try {
+                pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
-    /**
-     * Insert a new row into the rooms table
-     *
-     * @param room_id
-     * @param room_type
-     * @param phone_nr
-     * @param checkin_date
-     * @param nr_days
-     * @param checkout_date
-     * @param room_nr
-     */
-    public void roomsInsert(int room_id,String room_type, String phone_nr, String checkin_date, int nr_days, String checkout_date, int room_nr) {
-        String sql = "INSERT INTO rooms(room_nr, room_type, phone_nr, checkin_date, nr_days, checkout_date, room_nr) VALUES(?,?,?,?,?,?,?)";
 
-        try (Connection conn = this.connect();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1,room_id);
-            pstmt.setString(2, room_type);
-            pstmt.setString(3, phone_nr);
-            pstmt.setString(4, checkin_date);
-            pstmt.setInt(5, nr_days);
-            pstmt.setString(6, checkout_date);
-            pstmt.setInt(7, room_nr);
+    public void roomsInsert(Room room) {
+        String sql = "INSERT INTO rooms(room_id, room_type, room_price, room_guest, room_status, room_Service, mini_bar) VALUES(?,?,?,?,?,?,?)";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try  {
+            conn = DatabaseConnection.connect();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, room.getRoomId());
+            pstmt.setString(2, room.getRoomType());
+            pstmt.setDouble(3, room.getRoomPrice());
+            pstmt.setString(4, room.getRoomGuest());
+            pstmt.setString(5, room.getRoomStatus());
+            pstmt.setString(6, room.getRoomService());
+            pstmt.setString(7, room.getMiniBar());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
+        } finally {
+            finallyIf(conn, pstmt);
         }
     }
 
-    /**
-     * @param args the command line arguments
-     */
 
 }

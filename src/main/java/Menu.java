@@ -1,8 +1,12 @@
-import CommandPattern.CommandManager;
-import CommandPattern.CommandOperations;
-import CommandPattern.InformationModifier;
+import command.CommandManager;
+import command.CommandOperations;
+import command.InformationModifier;
 import DatabaseOperation.SelectInfo;
-import DecoratorPattern.PersonalisedRoomFactory;
+import pattern.strategy.decorator.PersonalisedRoomFactory;
+import pattern.strategy.NoDiscount;
+import pattern.strategy.PercentageDiscount;
+import pattern.strategy.PriceCalculator;
+import pattern.strategy.PriceDiscount;
 
 import java.util.Scanner;
 
@@ -82,6 +86,38 @@ public class Menu {
                     break;
 
                 case 7:
+                    System.out.println("Enter room price: ");
+                    double price = input.nextDouble();
+                    input.nextLine();
+                    System.out.println("Enter nr of days: ");
+                    int nrDays = input.nextInt();
+                    input.nextLine();
+                    System.out.println("Enter type of discount (no discount, percent discount, price discount): ");
+                    String discountType = input.nextLine();
+                    if (discountType.equalsIgnoreCase("percent discount")){
+                        System.out.println("Enter discount percent: ");
+                        int percent = input.nextInt();
+                        input.nextLine();
+                        PriceCalculator note = new PriceCalculator();
+                        note.setStrategy(new PercentageDiscount(percent));
+                        note.calculatePrice(price,nrDays);
+                        System.out.println("The guest has to pay: " + note.executeStrategy(note.getPrice()));
+                    }
+                    else if(discountType.equalsIgnoreCase("price discount")){
+                        System.out.println("Enter discount amount: ");
+                        double discountAmount = input.nextDouble();
+                        PriceCalculator note = new PriceCalculator();
+                        note.setStrategy(new PriceDiscount(discountAmount));
+                        note.calculatePrice(price, nrDays);
+                        System.out.println("The guest has to pay: " + note.executeStrategy(note.getPrice()));
+                    }
+                    else if(discountType.equalsIgnoreCase("no discount")){
+                        PriceCalculator note = new PriceCalculator();
+                        note.setStrategy(new NoDiscount());
+                        note.calculatePrice(price, nrDays);
+                        System.out.println("The guest has to pay: " + note.executeStrategy(note.getPrice()));
+                    }
+
                     break;
 
                 case 8:

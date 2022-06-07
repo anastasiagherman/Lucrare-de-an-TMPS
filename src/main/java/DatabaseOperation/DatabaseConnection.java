@@ -1,27 +1,23 @@
 package DatabaseOperation;
 
 import java.sql.Connection;
-import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    public static Connection connect(){
-        String url = "jdbc:sqlite:hotel.sqlite";
-        try(Connection conn = DriverManager.getConnection(url)){
-            if(conn != null){
-                DatabaseMetaData meta = conn.getMetaData();
-            }
-
+    public static Connection connect() {
+        String url = "jdbc:sqlite:C:/Users/Anastasia/DataGripProjects/HotelData/identifier.sqlite";
+        try {
+            Connection conn = DriverManager.getConnection(url);
+            return conn;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new RuntimeException("Connection failed", e);
         }
-        return null;
     }
 
     public static void main(String[] args) {
-        connect();
+        Connection conn = connect();
     }
 
 }
