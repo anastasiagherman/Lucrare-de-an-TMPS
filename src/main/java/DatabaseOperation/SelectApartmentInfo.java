@@ -1,19 +1,23 @@
 package DatabaseOperation;
 
+import composite.Apartment;
 import entity.Room;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SelectInfo {
+public class SelectApartmentInfo {
 
 
-    public List<Room> selectRooms(String sql) {
+    public List<Apartment> selectApartments() {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        List<Room> rooms = new ArrayList<Room>();
+        List<Apartment> apartments = new ArrayList<>();
+
+
+        String sql = "SELECT * FROM apartments";
 
         try {
             conn = DatabaseConnection.connect();
@@ -21,16 +25,14 @@ public class SelectInfo {
             rs = pstmt.executeQuery();
 
             while (rs.next()) {
-                Room room = new Room();
-                room.setRoomId((rs.getInt("room_id")));
-                room.setRoomType(rs.getString("room_type"));
-                room.setRoomPrice(rs.getDouble("room_price"));
-                room.setRoomGuest(rs.getString("room_guest"));
-                room.setRoomStatus(rs.getString("room_status"));
-                room.setRoomService(rs.getString("room_service"));
-                room.setMiniBar(rs.getString("mini_bar"));
-                room.setSqm(rs.getInt("sqm"));
-                rooms.add(room);
+                Apartment apartment = new Apartment();
+                apartment.setApartmentId((rs.getInt("apartment_id")));
+                apartment.setApartmentPrice(rs.getDouble("apartment_price"));
+                apartment.setApartmentGuest(rs.getString("apartment_guest"));
+                apartment.setRoomService(rs.getString("room_service"));
+                apartment.setMiniBar(rs.getString("mini_bar"));
+                apartment.setRoomIdList((rs.getString("rooms_list")));
+                apartments.add(apartment);
             }
 
         } catch (SQLException e) {
@@ -38,7 +40,7 @@ public class SelectInfo {
         } finally {
             finallyIf(conn, pstmt, rs);
         }
-        return rooms;
+        return apartments;
     }
 
 

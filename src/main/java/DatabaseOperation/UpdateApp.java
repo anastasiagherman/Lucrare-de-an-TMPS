@@ -43,6 +43,41 @@ public class UpdateApp {
         }
     }
 
+    public void updateRoomStatusEmpty(int roomNr){
+        String sql = "UPDATE rooms SET  room_status= ?," +" WHERE room_id = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = DatabaseConnection.connect();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(5, "Empty");
+            pstmt.setInt(1, roomNr);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            finallyIf(conn, pstmt);
+        }
+
+    }
+    public void updateRoomStatusOccupied(int roomNr){
+        String sql = "UPDATE rooms SET  room_status= ?," +" WHERE room_id = ?";
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        try {
+            conn = DatabaseConnection.connect();
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(5, "Occupied");
+            pstmt.setInt(1, roomNr);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            finallyIf(conn, pstmt);
+        }
+
+    }
+
     private void finallyIf(Connection conn, PreparedStatement pstmt) {
         if (conn != null){
             try {
@@ -59,4 +94,5 @@ public class UpdateApp {
             }
         }
     }
+
 }

@@ -1,10 +1,9 @@
 package DatabaseOperation;
 
-import Entity.GuestInfo;
-import Entity.Room;
+import entity.GuestInfo;
+import entity.Room;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 

@@ -1,8 +1,9 @@
-package Entity;
+package entity;
+import DatabaseOperation.SelectInfo;
+import composite.Accommodation;
+import composite.Apartment;
 
-import java.util.List;
-
-public class Room {
+public class Room implements Accommodation {
     private int roomId;
     private String roomType;
     private double roomPrice;
@@ -10,15 +11,9 @@ public class Room {
     private String roomStatus;
     private String roomService;
     private String miniBar;
-    private Apartment apartment;
-
-    public Apartment getApartment() {
-        return apartment;
-    }
-
-    public void setApartment(){
-        this.apartment = new Apartment();
-    }
+    private boolean empty;
+    private int sqm;
+    private String details;
 
     public void setRoomId(int roomId) {
         this.roomId = roomId;
@@ -74,5 +69,38 @@ public class Room {
 
     public String getMiniBar() {
         return miniBar;
+    }
+    public void setSqm(int sqm){
+     this.sqm = sqm;
+    }
+
+    @Override
+    public String toString() {
+        return "Room{" +
+                "roomId=" + roomId +
+                ", roomType='" + roomType + '\'' +
+                ", roomPrice=" + roomPrice +
+                ", roomGuest='" + roomGuest + '\'' +
+                ", roomStatus='" + roomStatus + '\'' +
+                ", roomService='" + roomService + '\'' +
+                ", miniBar='" + miniBar + '\'' +
+                ", sqm=" + sqm +
+                ", details='" + details + '\'' +
+                '}' + '\n';
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
+    @Override
+    public int getSqm() {
+        return this.sqm;
+    }
+
+    @Override
+    public String getDetails() {
+        return null;
     }
 }

@@ -24,14 +24,16 @@ public class DeleteApp {
         }
     }
 
-    public void delete(String guest_name) {
-        String sql = "DELETE FROM guests WHERE guest_name = ?";
+    public void delete(String guestName, int roomNr ) {
+        String sql = "DELETE FROM guests WHERE guest_name = ? AND room_nr = ?";
+
         Connection conn = null;
         PreparedStatement pstmt = null;
         try  {
             conn = DatabaseConnection.connect();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, guest_name);
+            pstmt.setString(1, guestName);
+            pstmt.setInt(7, roomNr);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {

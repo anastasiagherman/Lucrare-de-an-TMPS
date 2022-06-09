@@ -2,6 +2,7 @@ import command.CommandManager;
 import command.CommandOperations;
 import command.InformationModifier;
 import DatabaseOperation.SelectInfo;
+import composite.AccommodationManager;
 import pattern.strategy.decorator.PersonalisedRoomFactory;
 import pattern.strategy.NoDiscount;
 import pattern.strategy.PercentageDiscount;
@@ -30,7 +31,7 @@ public class Menu {
         System.out.println("======================================================");
         System.out.println("*            Hotel Management System                 *");
         System.out.println("======================================================");
-        System.out.println("* 1. View all rooms                                  *");
+        System.out.println("* 1. View hotel information                          *");
         System.out.println("* 2. Display Empty rooms                             *");
         System.out.println("* 3. Guest management                                *");
         System.out.println("* 4. Display Room information                        *");
@@ -53,8 +54,20 @@ public class Menu {
             switch (choice) {
 
                 case 1:
-                    System.out.println("Hotel Rooms info: ");
-                    SelectInfo roomsInfo= new SelectInfo();
+                    AccommodationManager man = new AccommodationManager();
+                    System.out.println("Choose info to display:\n 1.Rooms info\n 2.Apartments info\n 3.Accommodation info");
+                    int choice2 = input.nextInt();
+                    switch(choice2){
+                        case 1:
+                            System.out.println("Hotel Rooms info: ");
+                            System.out.println(man.getRooms());
+                        case 2:
+                            System.out.println("Hotel Apartments info: ");
+                            System.out.println(man.getApartments());
+                        case 3:
+                            System.out.println("Accommodation info: ");
+                            System.out.println(man.getAccommodation());
+                    }
                     break;
                 case 2:
 
@@ -121,7 +134,6 @@ public class Menu {
                     break;
 
                 case 8:
-
                     break;
                 default:
                     System.out.println("Invalid input! Please Enter one of these characters: 1,2,3,4,5,6,7,8");
