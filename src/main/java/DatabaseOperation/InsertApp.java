@@ -11,7 +11,7 @@ public class InsertApp {
 
 
     public void insert(GuestInfo guest) {
-        String sql = "INSERT INTO guests(guest_id, guest_name, phone_nr, checkin_date, nr_days, checkout_date, room_nr) VALUES(?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO guests(guest_id, guest_name, phone_nr, checkin_date, nr_days, checkout_date, room_nr ) VALUES(?,?,?,?,?,?,?)";
 
         Connection conn = null;
         PreparedStatement pstmt = null;

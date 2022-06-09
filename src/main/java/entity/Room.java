@@ -89,10 +89,6 @@ public class Room implements Accommodation {
                 '}' + '\n';
     }
 
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 
     @Override
     public int getSqm() {

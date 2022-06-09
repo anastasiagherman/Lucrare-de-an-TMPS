@@ -15,14 +15,10 @@ public class Apartment implements Accommodation {
     private String apartmentGuest;
     private String roomService;
     private String miniBar;
-    private boolean empty;
+    private String aptStatus;
     private String roomIdList;
     private List<Room> roomList = null;
 
-    @Override
-    public boolean isEmpty() {
-        return false;
-    }
 
     @Override
     public int getSqm() {
@@ -96,8 +92,8 @@ public class Apartment implements Accommodation {
         this.miniBar = miniBar;
     }
 
-    public void setEmpty(boolean empty) {
-        this.empty = empty;
+    public void setAptStatus(String aptStatus) {
+        this.aptStatus= aptStatus;
     }
 
     public void setRoomIdList(String roomIdList) {
@@ -112,8 +108,9 @@ public class Apartment implements Accommodation {
                 ", apartmentGuest='" + apartmentGuest + '\'' +
                 ", roomService='" + roomService + '\'' +
                 ", miniBar='" + miniBar + '\'' +
-                ", empty=" + empty +
+                ", empty=" + aptStatus +
                 ", roomList=" + getRooms() +
+                ", sqm=" + getSqm() +
                 '}';
     }
 }

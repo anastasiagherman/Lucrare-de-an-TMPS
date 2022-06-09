@@ -29,7 +29,7 @@ public class CommandOperations {
         InsertApp insertGuest = new InsertApp();
         insertGuest.insert(guest);
         UpdateApp update = new UpdateApp();
-        update.updateRoomStatusOccupied(guest.getRoomNr());
+        update.updateRoomStatusOccupied("Occupied",guest.getRoomNr(), guest.getName());
         System.out.println("Mr./Mm " + guest.getName() + " is staying in room nr " + guest.getRoomNr() + " for " + guest.getNrDays() + " days");
     }
 
@@ -39,7 +39,7 @@ public class CommandOperations {
         DeleteApp delete = new DeleteApp();
         delete.delete(guestName, roomNr);
         UpdateApp update = new UpdateApp();
-        update.updateRoomStatusEmpty(roomNr);
+        update.updateRoomStatusEmpty("EMPTY", roomNr);
         System.out.println("Mr./Mm " + guestName + " has leaved the room nr. ");
     }
 

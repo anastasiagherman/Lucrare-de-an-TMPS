@@ -31,7 +31,7 @@ public class SelectApartmentInfo {
                 apartment.setApartmentGuest(rs.getString("apartment_guest"));
                 apartment.setRoomService(rs.getString("room_service"));
                 apartment.setMiniBar(rs.getString("mini_bar"));
-                apartment.setRoomIdList((rs.getString("rooms_list")));
+                apartment.setAptStatus(rs.getString("apt_status"));
                 apartments.add(apartment);
             }
 
@@ -41,6 +41,35 @@ public class SelectApartmentInfo {
             finallyIf(conn, pstmt, rs);
         }
         return apartments;
+    }
+    public Apartment selectApartmentByName(String gstName) {
+        Connection conn = null;
+        ResultSet rs = null;
+        String sql = "SELECT * FROM rooms WHERE apartment_guest = ?";
+        PreparedStatement pstmt = null;
+        Apartment apartment = new Apartment();
+
+        try {
+            conn = DatabaseConnection.connect();
+
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, gstName);
+            rs = pstmt.executeQuery();
+
+            // loop through the result set
+            apartment.setApartmentId(rs.getInt("apartment_id"));
+            apartment.setApartmentPrice(rs.getDouble("apartment_price"));
+            apartment.setApartmentGuest(rs.getString("apartment_guest"));
+            apartment.setRoomService(rs.getString("room_service"));
+            apartment.setMiniBar(rs.getString("miniBar"));
+            apartment.setAptStatus(rs.getString("apt_status"));
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        } finally {
+            finallyIf(conn, pstmt, rs);
+        }
+        return apartment;
     }
 
 

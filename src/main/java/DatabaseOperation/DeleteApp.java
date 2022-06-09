@@ -33,7 +33,7 @@ public class DeleteApp {
             conn = DatabaseConnection.connect();
             pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, guestName);
-            pstmt.setInt(7, roomNr);
+            pstmt.setInt(2, roomNr);
             pstmt.executeUpdate();
 
         } catch (SQLException e) {

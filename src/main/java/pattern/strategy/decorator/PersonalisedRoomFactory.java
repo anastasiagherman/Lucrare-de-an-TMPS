@@ -3,7 +3,7 @@ package pattern.strategy.decorator;
 public class PersonalisedRoomFactory {
     private IRoom room;
 
-    public IRoom createRoom(String roomFeatures, int roomNr){
+    public IRoom createRoom(String roomFeatures){
         if (roomFeatures == null){
             return null;
         }

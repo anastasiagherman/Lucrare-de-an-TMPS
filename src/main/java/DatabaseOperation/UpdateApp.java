@@ -7,14 +7,14 @@ import java.sql.SQLException;
 
 public class UpdateApp {
 
-    public void addRoomService(int roomNr) {
-        String sql = "UPDATE rooms SET room_service = ?,"+" WHERE room_id = roomNR";
+    public void addRoomService(int roomNr, String rsStatus) {
+        String sql = "UPDATE rooms SET room_service = ?  WHERE room_id = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
             conn = DatabaseConnection.connect();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(6, "Included");
+            pstmt.setString(2, rsStatus);
             pstmt.setInt(1, roomNr);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -26,15 +26,15 @@ public class UpdateApp {
     }
 
 
-    public void addMiniBar(int roomNr){
-        String sql = "UPDATE rooms SET miniBar = ?," +" WHERE room_id = ?";
+    public void addMiniBar(String mbStatus, int roomNr){
+        String sql = "UPDATE rooms SET mini_bar = ? WHERE room_id = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
             conn = DatabaseConnection.connect();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(7, "Included");
-            pstmt.setInt(1, roomNr);
+            pstmt.setString(1, mbStatus);
+            pstmt.setInt(2, roomNr);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -43,14 +43,14 @@ public class UpdateApp {
         }
     }
 
-    public void updateRoomStatusEmpty(int roomNr){
-        String sql = "UPDATE rooms SET  room_status= ?," +" WHERE room_id = ?";
+    public void updateRoomStatusEmpty(String status, int roomNr){
+        String sql = "UPDATE rooms SET  room_status= ? WHERE room_id = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
             conn = DatabaseConnection.connect();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(5, "Empty");
+            pstmt.setString(2, status);
             pstmt.setInt(1, roomNr);
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -60,15 +60,16 @@ public class UpdateApp {
         }
 
     }
-    public void updateRoomStatusOccupied(int roomNr){
-        String sql = "UPDATE rooms SET  room_status= ?," +" WHERE room_id = ?";
+    public void updateRoomStatusOccupied(String roomSt, int roomNr, String gstName){
+        String sql = "UPDATE rooms SET  room_status= ?, room_guest = ? WHERE room_id = ?";
         Connection conn = null;
         PreparedStatement pstmt = null;
         try {
             conn = DatabaseConnection.connect();
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(5, "Occupied");
-            pstmt.setInt(1, roomNr);
+            pstmt.setString(1, roomSt);
+            pstmt.setInt(2, roomNr);
+            pstmt.setString(3, gstName);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println(e.getMessage());
